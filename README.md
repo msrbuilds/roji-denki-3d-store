@@ -20,12 +20,6 @@ A retro Japanese back-street electronics shop, built as a React single-page app 
   <img alt="Open 18:00 to 04:00" src="https://img.shields.io/badge/%E5%96%B6%E6%A5%AD%E4%B8%AD-18%3A00%E2%80%9304%3A00-f0a030?style=flat-square&labelColor=0c0a0f" />
   <img alt="Languages: English and Japanese" src="https://img.shields.io/badge/lang-EN%20%2F%20%E6%97%A5%E6%9C%AC%E8%AA%9E-7cff6b?style=flat-square&labelColor=0c0a0f" />
   <img alt="Checkout: demo only" src="https://img.shields.io/badge/checkout-demo%20only-b06bff?style=flat-square&labelColor=0c0a0f" />
-  <img alt="Deploys on Docker, Netlify and Vercel" src="https://img.shields.io/badge/deploy-Docker%20%C2%B7%20Netlify%20%C2%B7%20Vercel-cfc8bd?style=flat-square&labelColor=0c0a0f" />
-</p>
-
-<p>
-  <a href="https://github.com/msrbuilds/roji-denki-3d-store/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/msrbuilds/roji-denki-3d-store?style=flat-square&color=ff4f9a&labelColor=0c0a0f" /></a>
-  <a href="https://github.com/msrbuilds/roji-denki-3d-store/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/msrbuilds/roji-denki-3d-store?style=flat-square&color=f0a030&labelColor=0c0a0f" /></a>
 </p>
 
 </div>
