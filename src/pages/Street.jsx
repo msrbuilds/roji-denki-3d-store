@@ -4,6 +4,7 @@ import Scenes from '../scenes/street.js';
 import { DEPTS, PRODUCTS } from '../data.js';
 import { useStore } from '../store.jsx';
 import { clamp, showTip, useViewport } from '../util.js';
+import Credit from '../components/Credit.jsx';
 
 const STREET_LEN = 148;
 
@@ -175,6 +176,7 @@ export default function Street() {
         <span ref={meter} className="meter-val">000 M</span>
         <span className="meter-track"><span ref={bar} className="meter-bar" /></span>
       </div>
+      <Credit />
     </section>
   );
 }

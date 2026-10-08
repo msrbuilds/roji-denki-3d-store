@@ -15,9 +15,17 @@ const TICKER = ['本日営業 OPEN TONIGHT 18:00–04:00', '全品動作確認�
 
 export default function Header() {
   const { cart, setCartOpen, badgeRef, settingsRef } = useStore();
-  const track = useRef(null), logo = useRef(null);
+  const track = useRef(null), logo = useRef(null), bar = useRef(null);
   const count = cart.reduce((s, c) => s + c.qty, 0);
   const [isFs, setIsFs] = useState(() => !!fsElement());
+
+  // Full-height views (street, departments) size themselves from the real header height, which grows on narrow screens.
+  useEffect(() => {
+    const el = bar.current, root = document.documentElement;
+    const ro = new ResizeObserver(() => root.style.setProperty('--header-h', el.offsetHeight + 'px'));
+    ro.observe(el);
+    return () => { ro.disconnect(); root.style.removeProperty('--header-h'); };
+  }, []);
 
   useEffect(() => {
     const sync = () => setIsFs(!!fsElement());
@@ -40,7 +48,7 @@ export default function Header() {
 
   const half = <span>{TICKER.map(s => [<span key={s}>{s}</span>, <span key={s + 'd'}>◆</span>])}</span>;
   return (
-    <header className="header">
+    <header ref={bar} className="header">
       <div className="ticker">
         <div ref={track} className="ticker-track">{half}{half}</div>
         <div className="ticker-dots" />
@@ -48,7 +56,7 @@ export default function Header() {
       <nav className="nav">
         <Link to="/" className="logo"><span ref={logo} className="logo-jp">路地電気</span><span className="logo-en">ROJI DENKI</span></Link>
         <div className="nav-links">
-          <Link to="/shop#arrivals">Arrivals</Link>
+          <Link to="/shop#arrivals" className="nav-arrivals">Arrivals</Link>
           <NavLink to="/shop">Shop</NavLink>
           <NavLink to="/map">Map</NavLink>
           {fsEnabled() && (

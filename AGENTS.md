@@ -90,10 +90,11 @@ Conventions:
 
 ## Styling
 
-- Everything is in `src/styles.css`. CSS variables: `--ink`, `--panel`, `--paper`, `--muted`, `--dim`, `--pink`, `--pink-l`, `--cyan`, `--amber`, `--lcd`, fonts `--display` (Dela Gothic One), `--led` (DotGothic16), `--body` (Zen Kaku Gothic New), `--header-h` (95px sticky header).
+- Everything is in `src/styles.css`. CSS variables: `--ink`, `--panel`, `--paper`, `--muted`, `--dim`, `--pink`, `--pink-l`, `--cyan`, `--amber`, `--lcd`, fonts `--display` (Dela Gothic One), `--led` (DotGothic16), `--body` (Zen Kaku Gothic New), `--header-h` (sticky header height; `Header.jsx` keeps it in sync with the real height via ResizeObserver, 95px fallback).
 - Accent colours are `oklch(...)` values sharing lightness/chroma; keep new accents in that family.
 - Reusable classes: `.btn` + `.btn-pink` / `.btn-ghost` / `.btn-paper` / `.btn-sm`, `.card` + `.card-hover`, `.thumb`, `.eyebrow`, `.title`, `.lede`, `.price-led`, `.tip`, `.scanlines`.
 - Headings that should glitch in the Cyberpunk theme get a `data-glitch` attribute; the loop in `App.jsx` restores their original `text-shadow` afterwards.
+- The street shows an MSR Builds credit with GitHub / X / Facebook / website links bottom-right (`components/Credit.jsx`), under the walk meter.
 - Hero copy over the 3D street needs `.shadowed` / `.shadowed-sm` for legibility; keep the left-side gradient scrim (`.street-fade-h`).
 - Custom neon scrollbars are global (WebKit pseudo-elements + Firefox `scrollbar-color`).
 - The arrivals board is fluid (container queries, `cqi` units). Don't reintroduce fixed widths or horizontal scrolling.
