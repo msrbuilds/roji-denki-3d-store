@@ -25,7 +25,7 @@ Node 18+. No test suite or linter is configured; verify changes by running `npm 
 - `Dockerfile`: multi-stage, `node:20-alpine` build → `nginx:1.27-alpine` serve on **port 80**.
 - `nginx.conf`: SPA fallback (`try_files … /index.html`), gzip, `Cache-Control: immutable` for `/assets/`, `no-cache` for HTML.
 - Hosted with **Dokploy** (Application → GitHub provider → Dockerfile build type → domain on port 80 with HTTPS). Pushing to `main` redeploys if Auto Deploy is on.
-- Also deployable to **Netlify** (`netlify.toml`) and **Vercel** (`vercel.json`); both set `dist/` as output, a SPA fallback to `index.html` and immutable caching for `/assets/`. One-click deploy buttons are at the top of `README.md`.
+- Also deployable to **Netlify** (`netlify.toml`) and **Vercel** (`vercel.json`); both set `dist/` as output, a SPA fallback to `index.html` and immutable caching for `/assets/`. One-click deploy buttons sit in the Netlify and Vercel sections of `README.md`.
 - Any new top-level route works automatically thanks to the SPA fallbacks (nginx, Netlify, Vercel); don't add server routes.
 
 ## Routes
