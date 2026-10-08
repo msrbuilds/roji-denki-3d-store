@@ -2,6 +2,9 @@
 
 A retro Japanese back-street electronics shop, built as a React single-page app with three.js scenes and GSAP motion.
 
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/msrbuilds/roji-denki-3d-store)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmsrbuilds%2Froji-denki-3d-store&project-name=roji-denki-3d-store&repository-name=roji-denki-3d-store)
+
 - **Street** (`/`) — a full-screen 3D alley. Scroll, swipe or use ↑/↓ to walk; click a lit storefront to go inside.
 - **Departments** (`/dept/:key`) — shop interiors with products on the shelves.
 - **Product** (`/product/:id`) — turntable view with bench notes.
@@ -22,32 +25,16 @@ npm run preview    # serve the build locally
 
 Requires Node 18+.
 
-## Project layout
+## Deploy to Netlify or Vercel
 
-```
-src/
-  App.jsx              routes + layout, cyberpunk glitch effect
-  store.jsx            cart, settings, thumbnails, shared refs (React context)
-  data.js              products, departments, districts, board data
-  useBoard.js          split-flap board logic
-  components/          Header, Footer, CartDrawer, Settings, Thumb
-  pages/               Street, Dept, Product, Shop, Checkout, MapPage
-  scenes/street.js     three.js: street, shop interior, turntable, thumbnails, product models
-  scenes/diorama.js    three.js: map diorama
-```
+Use the buttons at the top of this README. Each one copies the repo to your GitHub account and deploys it; no environment variables are needed.
 
-Product images are rendered from the low-poly stand-in models at runtime (`Scenes.thumbnails`). To use real photos, add files under `public/products/` and point each product at them in `data.js`.
+Both hosts are preconfigured:
 
-## Publish to GitHub
+- `netlify.toml`: build command, `dist/` publish directory, Node 20, single-page-app fallback and long-lived caching for hashed assets.
+- `vercel.json`: Vite preset, `dist/` output, single-page-app rewrite and the same asset caching.
 
-```bash
-git init
-git add .
-git commit -m "Roji Denki storefront"
-git branch -M main
-git remote add origin git@github.com:msrbuilds/roji-denki-3d-store.git
-git push -u origin main
-```
+The single-page-app fallback is what lets deep links such as `/shop` or `/product/p3` load on refresh instead of returning 404.
 
 ## Deploy with Dokploy
 
