@@ -7,6 +7,19 @@ import { clamp, showTip, useViewport } from '../util.js';
 
 const STREET_LEN = 148;
 
+// Auto-walk tour: stroll from the entrance, pause in front of each department, linger at the main counter, then head back.
+const STOP_VIEW = 8;          // metres short of a storefront's centre, so it sits ahead and to the side
+const WALK_SPEED = 1.8;       // m/s average while strolling
+const RETURN_SPEED = 7;       // m/s on the way back to the entrance
+const DWELL = { start: 3, dept: 4.5, end: 6 };
+const USER_PAUSE = 4;         // s to hold after the visitor scrolls, before the tour carries on
+const TOUR = [
+  { w: 0, dwell: DWELL.start },
+  ...DEPTS.map(d => ({ w: (10 - (d.z + STOP_VIEW)) / STREET_LEN, dwell: DWELL.dept })).sort((a, b) => a.w - b.w),
+  { w: 1, dwell: DWELL.end }
+];
+const easeInOut = x => (1 - Math.cos(Math.PI * x)) / 2;
+
 export default function Street() {
   const nav = useNavigate();
   const { settings, settingsRef, walkRef, fontsReady } = useStore();
@@ -43,6 +56,33 @@ export default function Street() {
       window.removeEventListener('touchmove', onTM); window.removeEventListener('keydown', onKey);
     };
   }, [walkRef]);
+
+  useEffect(() => {
+    if (!settings.autoWalk) return;
+    let raf, prev = performance.now(), clock = 0, set = walkRef.current;
+    // Pause briefly wherever the visitor is, then walk to the next stop ahead.
+    let leg = null, holdUntil = DWELL.start;
+    const nextLeg = from => {
+      const stop = TOUR.find(s => s.w > from + .002);
+      const to = stop ? stop.w : 0, speed = stop ? WALK_SPEED : RETURN_SPEED;
+      const dur = Math.max(2, Math.abs(to - from) * STREET_LEN / speed);
+      return { from, to, t0: clock, dur, dwell: stop ? stop.dwell : DWELL.start };
+    };
+    const tick = now => {
+      clock += Math.min(.1, (now - prev) / 1000); prev = now;
+      if (Math.abs(walkRef.current - set) > 1e-4) { leg = null; holdUntil = clock + USER_PAUSE; }
+      if (!leg && clock >= holdUntil) leg = nextLeg(walkRef.current);
+      if (leg) {
+        const k = Math.min(1, (clock - leg.t0) / leg.dur);
+        walkRef.current = leg.from + (leg.to - leg.from) * easeInOut(k);
+        if (k === 1) { holdUntil = clock + leg.dwell; leg = null; }
+      }
+      set = walkRef.current;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [settings.autoWalk, walkRef]);
 
   useEffect(() => {
     if (!fontsReady || !stage.current) return;

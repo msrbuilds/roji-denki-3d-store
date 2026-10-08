@@ -75,7 +75,7 @@ src/
 
 Plain JS (not React). Each factory takes a container element and a `ctx` object, appends its own `<canvas>`, runs its own rAF loop, and returns `{ destroy(), … }`. Always call `destroy()` in the React effect cleanup (StrictMode mounts twice in dev).
 
-- `Scenes.alley(el, ctx)` — ctx: `depts`, `opts()` → `{theme, rain, flicker, autoWalk, active}`, `progress()` → 0..1 walk target, `visible()`, `onWalk(w)`, `onHover(info|null, x, y)`, `onEnter(key | 'all')`. Camera z = `10 - w*148`. Custom post-processing (bloom, chromatic aberration, vignette, grain) and a planar mirror for the wet road live in `makePost` / `makeMirror` / `mirrorMat`.
+- `Scenes.alley(el, ctx)` — ctx: `depts`, `opts()` → `{theme, rain, flicker, active}`, `progress()` → 0..1 walk target, `visible()`, `onWalk(w)`, `onHover(info|null, x, y)`, `onEnter(key | 'all')`. Camera z = `10 - w*148`. Custom post-processing (bloom, chromatic aberration, vignette, grain) and a planar mirror for the wet road live in `makePost` / `makeMirror` / `mirrorMat`.
 - `Scenes.interior(el, ctx)` — ctx: `dept`, `products[{id,name,priceFmt,grade,model}]`, `opts()`, `onHover`, `onPick(id)`.
 - `Scenes.turntable(el, ctx)` — returns `setModel(key)`; drag to rotate.
 - `Scenes.thumbnails(list)` — synchronous; renders each model offscreen and returns `{id: blobURL}`. Called once in `store.jsx` after fonts load.
@@ -101,6 +101,7 @@ Conventions:
 ## Behaviour details worth preserving
 
 - Walk position lives in `walkRef` (store), so leaving a department returns you to the same spot in the street.
+- Auto-walk is a tour in `pages/Street.jsx` (not the scene): it drives `walkRef` from stop to stop (`TOUR`: entrance, each dept at `STOP_VIEW` m short of its centre, end counter) with eased legs at `WALK_SPEED`, dwells per stop (`DWELL`), returns to the entrance at `RETURN_SPEED`, and pauses `USER_PAUSE` s whenever the visitor scrolls.
 - On the street, the directory board only shows at viewport width ≥ 1100px; paragraph copy and hints hide below 680px height so captions never slide under the header.
 - Split-flap: a new arrival is pushed to the top every 7s; only changed tiles flip, with per-row/per-column stagger.
 - Checkout: `busy` ref blocks double-payment; receipt animation has a 3s fallback in case GSAP's `onComplete` doesn't fire (background tabs).

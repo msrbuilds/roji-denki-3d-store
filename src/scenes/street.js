@@ -633,8 +633,7 @@ R.alley = function(el, ctx){
     const o = ctx.opts(); if (!o.active) return;
     if (o.theme !== theme) applyTheme(o.theme);
     t += dt; timeU.value = t;
-    let p = ctx.progress(); if (o.autoWalk) p = (1 - Math.cos(t*.08))/2;
-    walk += (p - walk) * Math.min(1, dt*3.5);
+    walk += (ctx.progress() - walk) * Math.min(1, dt*3.5);
     ctx.onWalk && ctx.onWalk(walk);
     if (!ctx.visible()) return;
     const z = 10 - walk*148;
