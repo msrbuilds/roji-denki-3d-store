@@ -22,6 +22,8 @@ A retro Japanese back-street electronics shop, built as a React single-page app 
   <img alt="Checkout: demo only" src="https://img.shields.io/badge/checkout-demo%20only-b06bff?style=flat-square&labelColor=0c0a0f" />
 </p>
 
+<img alt="Roji Denki: the 3D neon back alley with the department directory, rain-soaked street and lit storefronts" src="public/3d-street-shop-app.png" width="100%" />
+
 </div>
 
 - **Street** (`/`) — a full-screen 3D alley. Scroll, swipe or use ↑/↓ to walk; click a lit storefront to go inside.
