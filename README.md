@@ -42,8 +42,6 @@ Display settings (theme, rain, neon flicker, auto-walk, Japanese text) live in t
 ## Run locally
 
 ```bash
-git clone https://github.com/msrbuilds/roji-denki-3d-store.git
-cd roji-denki-3d-store
 npm install
 npm run dev        # http://localhost:5173
 npm run build      # production build in dist/
@@ -51,22 +49,6 @@ npm run preview    # serve the build locally
 ```
 
 Requires Node 18+.
-
-## Project layout
-
-```
-src/
-  App.jsx              routes + layout, cyberpunk glitch effect
-  store.jsx            cart, settings, thumbnails, shared refs (React context)
-  data.js              products, departments, districts, board data
-  useBoard.js          split-flap board logic
-  components/          Header, Footer, CartDrawer, Settings, Thumb
-  pages/               Street, Dept, Product, Shop, Checkout, MapPage
-  scenes/street.js     three.js: street, shop interior, turntable, thumbnails, product models
-  scenes/diorama.js    three.js: map diorama
-```
-
-Product images are rendered from the low-poly stand-in models at runtime (`Scenes.thumbnails`). To use real photos, add files under `public/products/` and point each product at them in `data.js`.
 
 ## Deploy to Netlify
 
